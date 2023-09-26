@@ -26,6 +26,7 @@ export default createGlobalStyle`
     }
 
     button {
+      transition: all .3s;
         cursor: pointer;
         background-color:${colors.primaryColor};
         border: none;
@@ -33,6 +34,11 @@ export default createGlobalStyle`
         color: #fff;
         border-radius: 4px;
         font-weight: 700;
+    }
+
+    button:hover {
+      color: yellow;
+      opacity: 80%;
     }
 
     a {
