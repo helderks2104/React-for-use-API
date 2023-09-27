@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import validator from 'email-validator';
+import { get } from 'lodash';
+import history from '../../services/history';
 import { Container } from '../../styles/GlobalStyles';
 import { Form } from './styled';
+import axios from '../../services/axios';
 
 export default function Register() {
   const [nome, setNome] = useState('');
@@ -10,12 +13,12 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     let formErrors = false;
-    if (!nome || !email || !password || !password2) {
+    if (!nome) {
       formErrors = true;
-      toast.error('Todos os campos precisam ser preenchidos!');
+      toast.error('Nome Invalido!');
     }
     if (!validator.validate(email)) {
       formErrors = true;
@@ -28,6 +31,23 @@ export default function Register() {
     if (password2 && password !== password2) {
       formErrors = true;
       toast.error('Senhas Precisam ser Iguais!');
+    }
+
+    if (formErrors) return;
+
+    try {
+      await axios.post('/users/', {
+        nome,
+        password,
+        email,
+      });
+
+      toast.success('Registrado com sucesso');
+      history.push('/login');
+    } catch (err) {
+      const errors = get(e, 'response.data.errors');
+      // eslint-disable-next-line no-console
+      errors.map(error => toast.error(error));
     }
   }
 
