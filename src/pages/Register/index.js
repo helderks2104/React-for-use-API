@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import validator from 'email-validator';
 import { get } from 'lodash';
-import history from '../../services/history';
 import { Container } from '../../styles/GlobalStyles';
+import history from '../../services/history';
 import { Form } from './styled';
 import axios from '../../services/axios';
 
