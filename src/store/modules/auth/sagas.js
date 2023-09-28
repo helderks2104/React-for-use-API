@@ -29,6 +29,6 @@ function persistRehydrate({ payload }) {
 }
 
 export default all([
-  takeLatest(types.LOGUIN_REQUEST, loguinRequest),
+  takeLatest(types.LOGIN_REQUEST, loguinRequest),
   takeLatest(types.PERSIST_REHYDRATE, persistRehydrate),
 ]);

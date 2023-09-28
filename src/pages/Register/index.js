@@ -1,59 +1,40 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import validator from 'email-validator';
-import { get } from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Container } from '../../styles/GlobalStyles';
-import history from '../../services/history';
 import { Form } from './styled';
-import axios from '../../services/axios';
+import * as actions from '../../store/modules/auth/actions';
+import validar from '../../store/modules/auth/validator';
 
-export default function Register() {
+export default function Register(props) {
+  const dispatch = useDispatch();
+  const { id, email: emailStored, nome: nomeStored } = useSelector(state => state.auth.user);
+  const { history } = props;
+
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
 
+  React.useEffect(() => {
+    if (!id) return;
+
+    setNome(nomeStored);
+    setEmail(emailStored);
+  }, [nomeStored, emailStored]);
+
   async function handleSubmit(e) {
     e.preventDefault();
-    let formErrors = false;
-    if (!nome) {
-      formErrors = true;
-      toast.error('Nome Invalido!');
-    }
-    if (!validator.validate(email)) {
-      formErrors = true;
-      toast.error('Email Invalido!');
-    }
-    if (password.length < 6) {
-      formErrors = true;
-      toast.error('Senha deve conter mais de 6 digitos!');
-    }
-    if (password2 && password !== password2) {
-      formErrors = true;
-      toast.error('Senhas Precisam ser Iguais!');
-    }
+    if (validar({ nome, email, password, id, history, password2 })) return;
 
-    if (formErrors) return;
-
-    try {
-      await axios.post('/users/', {
-        nome,
-        password,
-        email,
-      });
-
-      toast.success('Registrado com sucesso');
-      history.push('/login');
-    } catch (err) {
-      const errors = get(e, 'response.data.errors');
-      // eslint-disable-next-line no-console
-      errors.map(error => toast.error(error));
-    }
+    dispatch(actions.registerRequest({ nome, email, password, id, history }));
   }
 
   return (
     <Container>
-      <h1>Crie Sua Conta</h1>
+      <h1>{!id ? 'Crie Sua Conta' : 'Alterar Dados'}</h1>
       <Form onSubmit={e => handleSubmit(e)}>
         <label htmlFor="nome">
           Nome
@@ -85,8 +66,12 @@ export default function Register() {
           />
         </label>
 
-        <button type="submit">Criar minha conta</button>
+        <button type="submit">{id ? 'Salvar' : 'Criar conta'}</button>
       </Form>
     </Container>
   );
 }
+
+Register.propTypes = {
+  history: PropTypes.shape({}).isRequired,
+};

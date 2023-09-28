@@ -1,29 +1,46 @@
 import * as types from '../types';
+import axios from '../../../services/axios';
 
 const initialState = {
   isLoggedIn: false,
   token: false,
   user: {},
-  isLoading: false,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case types.LOGUIN_REQUEST: {
+    case types.LOGIN_REQUEST: {
       return state;
     }
-    case types.LOGUIN_SUCCESS: {
+    case types.LOGIN_SUCCESS: {
       const newState = { ...state };
       newState.isLoggedIn = true;
       newState.token = action.payload.token;
       newState.user = action.payload.user;
       return newState;
     }
-    case types.LOGUIN_FAILURE: {
+    case types.LOGIN_FAILURE: {
+      delete axios.defaults.headers.Authorization;
       const newState = { ...initialState };
       return newState;
     }
-
+    case types.REGISTER_REQUEST: {
+      return state;
+    }
+    case types.REGISTER_CREATED_SUCCESS: {
+      const newState = { ...state };
+      return newState;
+    }
+    case types.REGISTER_UPDATED_SUCCESS: {
+      const newState = { ...state };
+      newState.user.nome = action.payload.nome;
+      newState.user.email = action.payload.email;
+      return newState;
+    }
+    case types.REGISTER_FAILURE: {
+      const newState = { ...state };
+      return newState;
+    }
     default: {
       return state;
     }
