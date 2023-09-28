@@ -25,7 +25,8 @@ export default function (state = initialState, action) {
       return newState;
     }
     case types.REGISTER_REQUEST: {
-      return state;
+      const newState = { ...state };
+      return newState;
     }
     case types.REGISTER_CREATED_SUCCESS: {
       const newState = { ...state };

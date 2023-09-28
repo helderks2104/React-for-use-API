@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import validator from 'email-validator';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container } from '../../styles/GlobalStyles';
@@ -27,8 +25,7 @@ export default function Register(props) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (validar({ nome, email, password, id, history, password2 })) return;
-
+    if (validar({ nome, email, password, id, history, password2 }));
     dispatch(actions.registerRequest({ nome, email, password, id, history }));
   }
 
