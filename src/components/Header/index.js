@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaSignInAlt, FaSignOutAlt, FaUser, FaUserCircle } from 'react-icons/fa';
+import { FaHome, FaSignInAlt, FaPowerOff, FaUser, FaUserCircle } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { loginFailure } from '../../store/modules/auth/actions';
@@ -9,7 +9,6 @@ export default function Header() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const history = useHistory();
-  console.log(isLoggedIn);
 
   const logout = e => {
     e.preventDefault();
@@ -27,7 +26,7 @@ export default function Header() {
       </Link>
       {isLoggedIn ? (
         <Link onClick={logout} to="/logout">
-          <FaSignOutAlt size={24} />
+          <FaPowerOff size={24} />
         </Link>
       ) : (
         <Link to="/login">
