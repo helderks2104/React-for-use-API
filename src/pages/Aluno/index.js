@@ -57,7 +57,7 @@ export default function Aluno({ match }) {
       try {
         const { data } = await axios.post('/alunos', { nome, sobrenome, email, idade, peso, altura });
         toast.success('Aluno(a) criado(a) com sucesso!');
-        history.push(`/alunos/${data.id}/edit`);
+        history.push(`/aluno/${data.id}/edit`);
       } catch (err) {
         toast.error('Erro ao criar aluno!');
       }
