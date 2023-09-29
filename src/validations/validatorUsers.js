@@ -1,5 +1,5 @@
-import validator from 'email-validator';
 import { toast } from 'react-toastify';
+import { isEmail } from 'validator';
 
 export default function ({ nome, email, password, id, password2 }) {
   let formErrors = false;
@@ -8,7 +8,7 @@ export default function ({ nome, email, password, id, password2 }) {
     formErrors = true;
     toast.error('Nome Invalido!');
   }
-  if (!validator.validate(email)) {
+  if (!isEmail(email)) {
     formErrors = true;
     toast.error('Email Invalido!');
   }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import validator from 'email-validator';
+import { isEmail } from 'validator';
 import { get } from 'lodash';
 import { useDispatch } from 'react-redux';
 import { Container } from '../../styles/GlobalStyles';
@@ -18,7 +18,7 @@ export default function Login(props) {
     e.preventDefault();
     let formErrors = false;
 
-    if (!email || !password || password.length < 6 || !validator.validate(email)) {
+    if (!email || !password || password.length < 6 || !isEmail(email)) {
       toast.error('Usuario ou senha invalido!');
       formErrors = true;
     }

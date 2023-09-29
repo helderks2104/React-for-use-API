@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Container } from '../../styles/GlobalStyles';
 import { Form } from './styled';
 import * as actions from '../../store/modules/auth/actions';
-import validar from '../../store/modules/auth/validator';
+import validar from '../../validations/validatorUsers';
 
 export default function Register(props) {
   const dispatch = useDispatch();
