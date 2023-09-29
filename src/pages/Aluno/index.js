@@ -19,9 +19,15 @@ export default function Aluno({ match }) {
   const [sobrenome, setSobrenome] = useState('');
   const [email, setEmail] = useState('');
   const [idade, setIdade] = useState('');
-  const [peso, setPeso] = useState('');
-  const [altura, setAltura] = useState('');
+  // eslint-disable-next-line prefer-const
+  let [peso, setPeso] = useState('');
+  // eslint-disable-next-line prefer-const
+  let [altura, setAltura] = useState('');
   const [foto, setFoto] = useState('');
+
+  peso = peso.toString().replace(/,/g, '.');
+  altura = altura.toString().replace(/,/g, '.');
+  console.log(peso, altura);
 
   useEffect(() => {
     if (!id) return;
