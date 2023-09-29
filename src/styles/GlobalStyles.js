@@ -8,6 +8,7 @@ export default createGlobalStyle`
   --toastify-icon-color-error: white;
 }
 
+
     * {
         padding: 0;
         margin: 0;

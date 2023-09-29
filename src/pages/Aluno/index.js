@@ -30,7 +30,6 @@ export default function Aluno({ match }) {
       try {
         const { data } = await axios.get(`/alunos/${id}`);
         const Foto = get(data, 'Fotos[0].url', '');
-        console.log({ data });
 
         setNome(data.nome);
         setSobrenome(data.sobrenome);
@@ -52,24 +51,20 @@ export default function Aluno({ match }) {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    if (!validatorAlunos({ nome, sobrenome, email, idade, peso, altura }));
 
     if (!id) {
       try {
-        if (!validatorAlunos({ nome, sobrenome, email, idade, peso, altura })) {
-          const { data } = await axios.post('/alunos', { nome, sobrenome, email, idade, peso, altura });
-          toast.success('Aluno(a) criado(a) com sucesso!');
-          history.push(`/alunos/${data.id}/edit`);
-        }
+        const { data } = await axios.post('/alunos', { nome, sobrenome, email, idade, peso, altura });
+        toast.success('Aluno(a) criado(a) com sucesso!');
+        history.push(`/alunos/${data.id}/edit`);
       } catch (err) {
         toast.error('Erro ao criar aluno!');
-        console.log(err);
       }
     } else {
       try {
-        if (!validatorAlunos({ nome, sobrenome, email, idade, peso, altura })) {
-          await axios.put(`/alunos/${id}`, { nome, sobrenome, email, idade, peso, altura });
-          toast.success('Aluno(a) editado(a) com sucesso!');
-        }
+        await axios.put(`/alunos/${id}`, { nome, sobrenome, email, idade, peso, altura });
+        toast.success('Aluno(a) editado(a) com sucesso!');
       } catch (err) {
         const status = get(err, 'response.status', 0);
         const data = get(err, 'response.data', {});

@@ -13,6 +13,25 @@ export const Form = styled.form`
     border-radius: 4px;
     padding: 0 10px;
   }
+
+  input:focus {
+    border: 1px solid ${colors.primaryColor};
+  }
+
+  input:focus::placeholder {
+    transition: 1s;
+    transform: translateY(-40px);
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
 `;
 
 export const ProfilePicture = styled.div`
