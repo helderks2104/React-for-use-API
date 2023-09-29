@@ -27,7 +27,6 @@ export default function Aluno({ match }) {
 
   peso = peso.toString().replace(/,/g, '.');
   altura = altura.toString().replace(/,/g, '.');
-  console.log(peso, altura);
 
   useEffect(() => {
     if (!id) return;
@@ -37,6 +36,7 @@ export default function Aluno({ match }) {
         const { data } = await axios.get(`/alunos/${id}`);
         const Foto = get(data, 'Fotos[0].url', '');
 
+        setFoto(Foto);
         setNome(data.nome);
         setSobrenome(data.sobrenome);
         setEmail(data.email);
@@ -93,7 +93,7 @@ export default function Aluno({ match }) {
 
       {id && (
         <ProfilePicture>
-          {foto ? <img src={foto} alt={nome} /> : <FaUserCircle size={180} />}
+          {foto ? <img src={foto} alt={nome} crossOrigin="" /> : <FaUserCircle size={180} />}
           <Link to={`/fotos/${id}`}>
             <FaEdit size={24} />
           </Link>
