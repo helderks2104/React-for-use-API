@@ -35,7 +35,7 @@ export default function Header() {
       )}
       {isLoggedIn && (
         <span>
-          <FaUserCircle size={24} />
+          <FaUserCircle size={24} color="white" />
         </span>
       )}
     </Nav>
