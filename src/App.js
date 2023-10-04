@@ -1,6 +1,8 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+
+// Utiliza Context-API, uma forma de passar a todos os componentes filhos algum tipo de informação
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 

@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { Container } from '../../styles/GlobalStyles';
 import axios from '../../services/axios';
 import { AlunoContainer, ProfilePicture, NovoAluno } from './styled';
+import history from '../../services/history';
 
 export default function Alunos() {
   const [alunos, setAlunos] = useState([]);
@@ -35,6 +36,7 @@ export default function Alunos() {
       e.target.parentElement.remove();
       novosAlunos.splice(index, 1);
       setAlunos(novosAlunos);
+      history.push('/');
     } catch (err) {
       const status = get(err, 'response.status', 0);
 

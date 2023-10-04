@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
+// icones do react-icons
 import { FaUserCircle, FaEdit } from 'react-icons/fa';
 import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
+// Para utilizar o history.push('/')
 import history from '../../services/history';
 import { Container } from '../../styles/GlobalStyles';
+// Fazer requisições para a API
 import axios from '../../services/axios';
 import { ProfilePicture, Form, Title } from './styled';
 import validatorAlunos from '../../validations/validatorAlunos';
@@ -14,6 +17,7 @@ import * as actions from '../../store/modules/auth/actions';
 
 export default function Aluno({ match }) {
   const dispatch = useDispatch();
+  // Tento pegar o id pelo match - params.id, caso nao tenha o id vira uma string vazia
   const id = get(match, 'params.id', '');
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
@@ -28,6 +32,8 @@ export default function Aluno({ match }) {
   peso = peso.toString().replace(/,/g, '.');
   altura = altura.toString().replace(/,/g, '.');
 
+  // Função chamada assim que minha pagina for renderizada
+  // Caso eu tenha um ID de aluno a pagina ja carrega as informações dele pro usuario
   useEffect(() => {
     if (!id) return;
 
@@ -62,8 +68,8 @@ export default function Aluno({ match }) {
     if (!id) {
       try {
         const { data } = await axios.post('/alunos', { nome, sobrenome, email, idade, peso, altura });
-        toast.success('Aluno(a) criado(a) com sucesso!');
         history.push(`/aluno/${data.id}/edit`);
+        toast.success('Aluno(a) criado(a) com sucesso!');
       } catch (err) {
         toast.error('Erro ao criar aluno!');
       }

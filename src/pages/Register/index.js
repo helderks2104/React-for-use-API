@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
+// Para usar o HTML e setar os valores dos estados
 import { useSelector, useDispatch } from 'react-redux';
+// Disparador de ações e useSelector para Recuperar estados ja setados armazenados
+// useSelector(state => state.auth.user)
 import PropTypes from 'prop-types';
 import { Container } from '../../styles/GlobalStyles';
 import { Form } from './styled';
 import * as actions from '../../store/modules/auth/actions';
 import validar from '../../validations/validatorUsers';
 
+// O Parametro 'props' é recebido pela propria pagina, pois o Register esta dentro de uma Route do
+// React router dom
 export default function Register(props) {
+  // Register esta sendo convodado
+  // por uma tag 'Route' do react-router-dom
+  // Podemos receber 3 coisas importantes da tag Route: match, props, history entre outros
+  console.log(props);
+
   const dispatch = useDispatch();
+
+  // Recuperando os dados do Storage do navegador - do store do redux
   const { id, email: emailStored, nome: nomeStored } = useSelector(state => state.auth.user);
   const { history } = props;
 
@@ -16,11 +28,14 @@ export default function Register(props) {
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
 
+  // Assim que renderizar a pagina esta função sera chamada
   React.useEffect(() => {
     if (!id) return;
 
     setNome(nomeStored);
     setEmail(emailStored);
+
+    // Passamos por parametro os valores de variaveis que vem de fora do state
   }, [nomeStored, emailStored]);
 
   async function handleSubmit(e) {
@@ -69,6 +84,8 @@ export default function Register(props) {
   );
 }
 
+// Sempre que precisarmos de um parametro na função React. precisamos colocar props como parametro
+// e tambem usar a extensao PropTypes, e chamas a seguinta função
 Register.propTypes = {
   history: PropTypes.shape({}).isRequired,
 };
